@@ -5,6 +5,9 @@ on individual user actions, for example submitting a form.
 
 example for consuming a token on Form validation:
 
+    INVITATION_MAX_TOKENS = 5
+    INVITATION_FILL_RATE = 300  # a token each x seconds
+
     def clean(self):
         cleaned_data = super(InvitationForm, self).clean()
         bucket = TokenBucket.get(identifier='invitations_sent',

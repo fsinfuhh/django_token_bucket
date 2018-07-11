@@ -78,11 +78,11 @@ class TokenBucket(models.Model):
         if num_tokens <= total_tokens:
             return 0
         num_missing = num_tokens - total_tokens
-        return num_missing / self.fill_rate
+        return num_missing * self.fill_rate
 
     def _calc_tokens(self, now):
         delta = (now - self.last_updated).total_seconds()
-        return min(self.tokens + delta * self.fill_rate, self.max_tokens)
+        return min(self.tokens + delta / self.fill_rate, self.max_tokens)
 
     @classmethod
     def get(cls, identifier, user, max_tokens, fill_rate, whatfor=None):
