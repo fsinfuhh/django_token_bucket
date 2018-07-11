@@ -107,3 +107,6 @@ class TokenBucket(models.Model):
 
         bucket.TokensExceeded = TokensExceeded
         return bucket
+
+    def __str__(self):
+        return 'TokenBucket(user={}, identifier={})'.format(self.user, self.identifier)
