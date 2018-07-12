@@ -15,7 +15,7 @@ class TokensExceededBase(Exception):
     def __init__(self, time_available):
         self.time_available = time_available
 
-    def get_message(self, tz=None):
+    def __str__(self, tz=None):
         if tz is None:
             tz = pytz.timezone(settings.TIME_ZONE)
         time_available = self.time_available.astimezone(tz)
@@ -102,7 +102,7 @@ class TokenBucket(models.Model):
 
         scope_whatfor = whatfor
 
-        class TokensExceeded (TokensExceededBase):
+        class TokensExceeded(TokensExceededBase):
             whatfor = scope_whatfor
 
         bucket.TokensExceeded = TokensExceeded

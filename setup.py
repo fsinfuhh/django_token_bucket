@@ -3,7 +3,7 @@ import codecs
 from setuptools import setup, find_packages
 
 
-version = '0.1.dev1'
+version = '0.1.dev2'
 
 
 def read(*parts):
@@ -25,7 +25,7 @@ setup(
     name='django_token_bucket',
     version=version,
     description='Django Tocken Bucket support.',
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     author='Nils Rokita, Henning Pridöhl',
     author_email='0rokita@informatik.uni-hamburg.de',
     maintainer='Nils Rokita',

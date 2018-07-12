@@ -1,12 +1,32 @@
-# django_token_bucket
-
 A token bucket implementation for Django to implement rate limiting
 on individual user actions, for example submitting a form.
+
+Installation
+############
+
+Insatall:
+
+    pip install django-token-bucket
+
+add it to your installed apps:
+
+    INSTALLED_APPS = [
+        '...',
+        'django_token_bucket'
+    ]
+
+run migrations:
+
+    ./manage.py migrate django_token_bucket
+
+
+Examples
+########
 
 example for consuming a token on Form validation:
 
     INVITATION_MAX_TOKENS = 5
-    INVITATION_FILL_RATE = 300  # a token each x seconds
+    INVITATION_FILL_RATE = 300  # a token each 300 seconds
 
     def clean(self):
         cleaned_data = super(InvitationForm, self).clean()
@@ -18,5 +38,5 @@ example for consuming a token on Form validation:
         try:
             bucket.consume(1)
         except bucket.TokensExceeded as e:
-            raise forms.ValidationError(e.get_message())
+            raise forms.ValidationError(str(e))
         return cleaned_data
