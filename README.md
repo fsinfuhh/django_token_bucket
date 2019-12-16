@@ -31,7 +31,7 @@ example for consuming a token on Form validation:
     def clean(self):
         cleaned_data = super(InvitationForm, self).clean()
         bucket = TokenBucket.get(identifier='invitations_sent',
-                           user=self.user,
+                           ref_object=self.user,
                            max_tokens=INVITATION_MAX_TOKENS,
                            fill_rate=INVITATION_FILL_RATE,
                            whatfor='invitations')

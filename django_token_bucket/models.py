@@ -1,10 +1,10 @@
-
 from datetime import timedelta
 
 import pytz
-
-from django.db import models
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext as _
 
@@ -34,14 +34,16 @@ class TokensExceededBase(Exception):
 
 class TokenBucket(models.Model):
     identifier = models.CharField(max_length=30)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    foreign_object = GenericForeignKey()
     max_tokens = models.IntegerField()
     fill_rate = models.FloatField()
     tokens = models.FloatField(default=0.0)
     last_updated = models.DateTimeField()
 
     class Meta:
-        unique_together = ('identifier', 'user')
+        unique_together = ('identifier', 'object_id', 'content_type')
 
     def consume(self, num_tokens, save=True):
         """Remove num_tokens from the bucket.
@@ -85,16 +87,20 @@ class TokenBucket(models.Model):
         return min(self.tokens + delta / self.fill_rate, self.max_tokens)
 
     @classmethod
-    def get(cls, identifier, user, max_tokens, fill_rate, whatfor=None):
+    def get(cls, identifier, ref_object, max_tokens, fill_rate, whatfor=None):
         """Get a token bucket with specified configuration.
 
         Always use this function to get a bucket!
         """
         try:
-            bucket = cls.objects.get(identifier=identifier, user=user)
+            bucket = cls.objects.get(
+                identifier=identifier,
+                content_type=ContentType.objects.get_for_model(ref_object),
+                object_id=ref_object.id,
+            )
         except cls.DoesNotExist:
             bucket = cls(identifier=identifier,
-                         user=user,
+                         user=ref_object,
                          max_tokens=max_tokens,
                          fill_rate=fill_rate,
                          tokens=max_tokens,
@@ -109,4 +115,4 @@ class TokenBucket(models.Model):
         return bucket
 
     def __str__(self):
-        return 'TokenBucket(user={}, identifier={})'.format(self.user, self.identifier)
+        return 'TokenBucket(ref={}, identifier={})'.format(self.foreign_object, self.identifier)
