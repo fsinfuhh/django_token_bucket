@@ -26,6 +26,7 @@ setup(
     version=version,
     description='Django Tocken Bucket support.',
     long_description=read('README.md'),
+    long_description_content_type="text/markdown",
     author='Nils Rokita, Henning Pridöhl',
     author_email='0rokita@informatik.uni-hamburg.de',
     maintainer='Nils Rokita',
