@@ -100,7 +100,7 @@ class TokenBucket(models.Model):
             )
         except cls.DoesNotExist:
             bucket = cls(identifier=identifier,
-                         user=ref_object,
+                         foreign_object=ref_object,
                          max_tokens=max_tokens,
                          fill_rate=fill_rate,
                          tokens=max_tokens,
