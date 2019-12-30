@@ -16,6 +16,13 @@ class TokensExceededBase(Exception):
         self.time_available = time_available
 
     def __str__(self, tz=None):
+        return self.get_message(tz)
+
+    @property
+    def message(self):
+        return self.get_message()
+
+    def get_message(self, tz=None):
         if tz is None:
             tz = pytz.timezone(settings.TIME_ZONE)
         time_available = self.time_available.astimezone(tz)
