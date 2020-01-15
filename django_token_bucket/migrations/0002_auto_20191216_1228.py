@@ -15,6 +15,11 @@ class Migration(migrations.Migration):
             old_name='user',
             new_name='object_id',
         ),
+        migrations.AlterField(
+            model_name='tokenbucket',
+            name='object_id',
+            field=models.PositiveIntegerField(),
+        ),
         migrations.AddField(
             model_name='tokenbucket',
             name='content_type',

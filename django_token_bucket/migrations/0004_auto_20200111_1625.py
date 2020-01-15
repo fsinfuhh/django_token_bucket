@@ -16,11 +16,6 @@ class Migration(migrations.Migration):
             name='content_type',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType'),
         ),
-        migrations.AlterField(
-            model_name='tokenbucket',
-            name='object_id',
-            field=models.PositiveIntegerField(),
-        ),
         migrations.AlterUniqueTogether(
             name='tokenbucket',
             unique_together={('identifier', 'object_id', 'content_type')},
