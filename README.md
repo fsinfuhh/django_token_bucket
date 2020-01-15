@@ -1,8 +1,8 @@
 A token bucket implementation for Django to implement rate limiting
 on individual user actions, for example submitting a form.
 
-Installation
-############
+## Installation
+
 
 Insatall:
 
@@ -20,8 +20,8 @@ run migrations:
     ./manage.py migrate django_token_bucket
 
 
-Examples
-########
+## Examples
+
 
 example for consuming a token on Form validation:
 
@@ -38,5 +38,8 @@ example for consuming a token on Form validation:
         try:
             bucket.consume(1)
         except bucket.TokensExceeded as e:
-            raise forms.ValidationError(str(e))
+            raise forms.ValidationError(e.get_message())
         return cleaned_data
+
+the `TokensExceeded.get_message` function takes the Timezone to give the retry time in as optional parameter.
+
