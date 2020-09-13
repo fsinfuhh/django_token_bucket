@@ -36,7 +36,7 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     classifiers=[
-        'Development Status :: 2 - Beta',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Programming Language :: Python',
         'License :: OSI Approved :: MIT License',
