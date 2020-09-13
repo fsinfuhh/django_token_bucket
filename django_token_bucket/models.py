@@ -25,6 +25,8 @@ class TokensExceededBase(Exception):
     def get_message(self, tz=None):
         if tz is None:
             tz = pytz.timezone(settings.TIME_ZONE)
+        if isinstance(tz, str):
+            tz = pytz.timezone(tz)
         time_available = self.time_available.astimezone(tz)
         if time_available.date() != timezone.now().date():
             time_format = '%Y-%m-%d %H:%M'
