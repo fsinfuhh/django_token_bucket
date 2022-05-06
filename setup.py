@@ -3,7 +3,7 @@ import codecs
 from setuptools import setup, find_packages
 
 
-version = '0.2.3'
+version = '0.2.4'
 
 
 def read(*parts):
@@ -28,9 +28,9 @@ setup(
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
     author='Nils Rokita, Henning Pridöhl',
-    author_email='0rokita@informatik.uni-hamburg.de',
+    author_email='github@rokita.it',
     maintainer='Nils Rokita',
-    maintainer_email='0rokita@informatik.uni-hamburg.de',
+    maintainer_email='github@rokita.it',
     url='https://github.com/fsinfuhh/django_token_bucket',
     license='License :: OSI Approved :: MIT License',
     packages=find_packages(),
